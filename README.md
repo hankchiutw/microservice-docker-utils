@@ -84,3 +84,4 @@ host machine directory | mount to container
 ### References
 - [Docker -- 從入門到實踐](https://philipzheng.gitbooks.io/docker_practice/content/index.html): including basic docker management(i.e. run, stop, images), [network access](https://philipzheng.gitbooks.io/docker_practice/content/network/index.html), [container](https://philipzheng.gitbooks.io/docker_practice/content/container/index.html), ...etc.
 - [fluentd](http://fluentd.org/)
+- [Nginx: Introduction to Microservices](https://www.nginx.com/blog/introduction-to-microservices/)
