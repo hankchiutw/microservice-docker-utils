@@ -1,0 +1,45 @@
+# Container of a node app that can be deployed by pm2
+
+FROM phusion/baseimage
+MAINTAINER Hank hankchiu.tw@gmail.com
+
+# app name on bitbucket
+ARG APP_NAME
+ARG APP_ENV
+
+# install required library
+RUN curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash -
+RUN apt-get update && apt-get install -y nodejs git python build-essential
+RUN npm i -g pm2 mocha apidoc concurrently
+
+# enabled sshd
+# method 1:
+#RUN cat /dev/zero | ssh-keygen -t rsa -q -N ""
+
+# method 2:
+RUN rm -f /etc/service/sshd/down
+RUN /etc/my_init.d/00_regen_ssh_host_keys.sh > /dev/nul 2>&1
+RUN ln -s /etc/ssh/ssh_host_rsa_key /root/.ssh/id_rsa && ln -s /etc/ssh/ssh_host_rsa_key.pub /root/.ssh/id_rsa.pub
+
+# append developer's public key
+ADD developer-key/$APP_NAME-$APP_ENV /tmp/id_rsa.pub
+RUN cat /tmp/id_rsa.pub >> /root/.ssh/authorized_keys && rm -f /tmp/id_rsa.pub
+
+##
+# Project source code
+# should be setup by client with pm2 deploy setup
+##
+# pull source code and run
+RUN mkdir -p /var/app/$APP_NAME/$APP_ENV
+WORKDIR /var/app/$APP_NAME/$APP_ENV
+
+# avoid interactive git pull question
+RUN ssh-keyscan bitbucket.org >> /root/.ssh/known_hosts
+
+EXPOSE 80 22
+
+# Clean up APT when done.
+#RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# boot
+CMD ["/sbin/my_init"]
