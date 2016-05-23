@@ -56,9 +56,9 @@ Utils to build/manage docker images/containers in a microservice manner.
 
 ### How it works
 - Build docker images from [phusion/baseimage](https://hub.docker.com/r/phusion/baseimage/)
-- SSH port forwarding. See ssh-tunnel.md
-- Centralized logging. See fluentd.md
-- Let's Encrypt free SSL certification. See letsencrypt.md
+- SSH port forwarding. See [ssh-tunnel.md](./ssh-tunnel.md)
+- Centralized logging. See [fluentd.md](./fluentd.md)
+- Let's Encrypt free SSL certification. See [letsencrypt.md](./letsencrypt.md)
 - Store log files on AWS S3 by fluentd [s3 output plugin](http://docs.fluentd.org/articles/out_s3)
 - Persistent data on host machine and mounted to the container: local logs, .conf files, database data, cert pem files
 
